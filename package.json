@@ -1,0 +1,23 @@
+{
+  "name": "webstudy-front",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "\"jack\"",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacim3/Spa-RestApi-WebStudty-Front.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jacim3/Spa-RestApi-WebStudty-Front/issues"
+  },
+  "homepage": "https://github.com/jacim3/Spa-RestApi-WebStudty-Front#readme",
+  "description": "\"test\"",
+  "dependencies": {
+    "react": "^17.0.2"
+  }
+}
