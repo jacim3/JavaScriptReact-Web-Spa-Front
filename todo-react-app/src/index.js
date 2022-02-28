@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// 첫 번째 매개변수로, 리액트 컴포넌트를,
+// 두 번째 매개변수로, root 엘리번트를 받는다.
+// 즉 첫 번째 매개변수로 전달받은 컴포넌트를 root 아래에 추가하라는 의미.
 ReactDOM.render(
   <React.StrictMode>
     <App />
