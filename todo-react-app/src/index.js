@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './js/App';
 import reportWebVitals from './reportWebVitals';
 
 // 첫 번째 매개변수로, 리액트 컴포넌트를,
