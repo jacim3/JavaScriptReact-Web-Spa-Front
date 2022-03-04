@@ -3,6 +3,7 @@ import '../css/App.css';
 import {Paper, List, Container} from "@material-ui/core";
 import Todo from './Todo';
 import AddTodo from './AddTodo';
+import {call} from "../service/ApiService";
 
 /*
 function App() {
@@ -32,32 +33,50 @@ class App extends React.Component {
             items: []
         };
     }
-    // 로직
-    add = (item) => {
-        const thisItems = this.state.items;
-        item.id = "ID-"+thisItems.length;
-        item.done = false;
-        thisItems.push(item);
-        this.setState({items: thisItems});
-        console.log("items : ", this.state.items);
+
+    // HTTP 응답 코드 (200 : 성공적, 400 : 해당 리소스가 존재하지 않음, 403 : 송신자에게 해당 리소스 접근 권한이 없음, 500 : 서버의 에러로 요청을 처리할 수 없음.)
+    // fetch api를 통한, 백엔드로 부터 Api 요청
+    // CORS (Cross Oriign Resource Sharing) : 처음 리소스를 제공한 도메인(localhost:3000)이
+    // 현재 요청하려는 도메인(localhost:8080)과 다르더라도 요청을 허락해 주는 웹 보안 방침.
+    // 브라우저는 기본적으로 2개의 요청을 보내며, 첫 번째 요청인 OPTIONS 메서드의 요청은 목표 리소스에 대하여, 어떤 HTTP 메서드를 사용할 수
+    // 있는지 확인하기 위하여. 두 번째 요청은 첫 번째 OPTIONS 요청이 반환됨에 따라 CORS, GET 사용 여부에 따라 두 번째인 원래 요청을 보내게 됨.
+    componentDidMount = () => {
+
+        call("/todo", "GET", null).then((response) => {
+            console.log(response)
+            this.setState({items: response.data})
+        })
     }
 
+    // 로직
+    add = (item) => {
+        item.done = false;
+        call("/todo", "POST", item).then(response => {
+            this.setState({items: response.data})
+        })
+    }
+
+
     delete = (item) => {
-        const thisItems = this.state.items;
-        console.log("Before Update Items : ", this.state.items)
-        // filter를 통하여 해당 조건에 맞는 요소만 필터링 하고 나머지는 버린다.
-        const newItems = thisItems.filter(e=> e.id !== item.id);
-        // setState()를 통하여 변경점을 저장하고 실시간 UI 업데이트 수행.
-        this.setState({items:newItems}, () => {
-            console.log("Update Items : ", this.state.items)
+        /*        const thisItems = this.state.items;
+                console.log("Before Update Items : ", this.state.items)
+                // filter를 통하여 해당 조건에 맞는 요소만 필터링 하고 나머지는 버린다.
+                const newItems = thisItems.filter(e => e.id !== item.id);
+                // setState()를 통하여 변경점을 저장하고 실시간 UI 업데이트 수행.
+                this.setState({items: newItems}, () => {
+                    console.log("Update Items : ", this.state.items)
+                });*/
+
+        call("/todo", "DELETE", item).then((response) => {
+            this.setState({items: response.data})
         });
     }
 
-    // 렌더
+// 렌더
     render() {
         // map을 통하여 주어진 배열에 대하여 재로운 조건으로 다시 가공.
         // 이렇게 배열 형태로서 처리된 Todo 객체를 병렬처리를 통하여 수행....????
-        let todoItems = this.state.items.length > 0 &&(
+        let todoItems = this.state.items.length > 0 && (
             <Paper style={{margin: 16}}>
                 <List>
                     {this.state.items.map((item, idx) => (
@@ -70,7 +89,7 @@ class App extends React.Component {
         return (
             <div className={"App"}>
                 <Container maxWidth={"md"}>
-                    <AddTodo add = {this.add}/>
+                    <AddTodo add={this.add}/>
                     <div className={"TodoList"}>{todoItems}</div>
                 </Container>
             </div>

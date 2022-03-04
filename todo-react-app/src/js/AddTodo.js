@@ -1,6 +1,6 @@
 import React from "react";
 import {TextField, Paper, Button, Grid} from "@material-ui/core";
-
+import {call} from "../service/ApiService";
 
 // input, 버튼으로 구성. 리스트 추가 로직 수행.
 class AddTodo extends React.Component {
@@ -12,10 +12,16 @@ class AddTodo extends React.Component {
     }
 
     // onChange 메서드에 연결하여, 실시간으로 변경사항을 읽어온다.
+    // 수정사항에 대해 UI 업데이트 수행.
     onInputChange = (e) => {
         const thisItem = this.state.item;
         thisItem.title = e.target.value;
-        this.setState({item:thisItem});
+        console.log(thisItem)
+        call('/todo',"PUT", thisItem).then(request => {
+            console.log(request)
+            this.setState({item:thisItem});
+        })
+
         console.log(thisItem)
     }
 
