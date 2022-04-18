@@ -1,4 +1,4 @@
-# 웹 SPA 개인 스터디 (백엔드) 
+# 웹 SPA 개인 스터디 (프론트엔드) 
 
 # 설명
 - Layered Architecture Pattern 에 근거한 웹 어플리케이션 개인 스터디 저장소 입니다.
